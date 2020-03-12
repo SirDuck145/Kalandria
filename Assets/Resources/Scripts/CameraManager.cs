@@ -64,17 +64,49 @@ namespace Com.LunacyIncorporation.Kalandria
                 return;
             }
 
-            // Mouse is near the left side
+            // Checks the horizontal margins for panning
             if (Input.mousePosition.x < screenBoundWidth)
             {
-                Debug.Log("Mouse is near the left side of the screen");
-                gameObject.transform.position = new Vector3(panSpeed*Time.deltaTime, 0, 0);
+                if (Input.mousePosition.y > screenHeight - screenBoundHeight)
+                {
+                    Debug.Log("Mouse is near the left and top");
+                }
+                else if (Input.mousePosition.y < screenBoundHeight)
+                {
+                    Debug.Log("Mouse is near the left and bottom");
+                }
+                else
+                {
+                    Debug.Log("Mouse is near the left");
+                    gameObject.transform.position = new Vector3(panSpeed * Time.deltaTime, 0, 0);
+                }
+
+            }
+            else if (Input.mousePosition.x > screenWidth - screenBoundWidth)
+            {
+                if (Input.mousePosition.y > screenHeight - screenBoundHeight)
+                {
+                    Debug.Log("Mouse is near the right and top");
+                }
+                else if (Input.mousePosition.y < screenBoundHeight)
+                {
+                    Debug.Log("Mouse is near the right and bottom");
+                }
+                else
+                {
+                    Debug.Log("Mouse is near the right");
+                    gameObject.transform.position = new Vector3(panSpeed * Time.deltaTime, 0, 0);
+                }
             }
 
-            // Mouse is near the right side
-            if (Input.mousePosition.x > screenWidth - screenBoundWidth)
+            // Check the vertical margins
+            if (Input.mousePosition.y > screenHeight - screenBoundHeight)
             {
-                Debug.Log("Mouse is near the right side of the screen");
+                Debug.Log("Mouse is at the top");
+            }
+            else if (Input.mousePosition.y < screenBoundHeight)
+            {
+                Debug.Log("Mouse is at the bottom");
             }
         }
 
