@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Com.LunacyIncorporation.Kalandria
 {
@@ -42,6 +43,7 @@ namespace Com.LunacyIncorporation.Kalandria
         {
             // *Critical*
             // this makes sure we can use PhotonNetwork.loadLevel() on the master client and all clients in that same room sync their level
+            Debug.Log("Scenes are synced");
             PhotonNetwork.AutomaticallySyncScene = true;
         }
 
@@ -104,7 +106,7 @@ namespace Com.LunacyIncorporation.Kalandria
             Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
             // #Critical: we failed to join a random room, maybe none exist or are full.
-            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers });
+            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers, CleanupCacheOnLeave = false });
         }
 
         public override void OnJoinedRoom()
@@ -134,7 +136,6 @@ namespace Com.LunacyIncorporation.Kalandria
         {
             Debug.Log("Load the test room");
             PhotonNetwork.LoadLevel("GameMapTest");
-            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
         }
         #endregion
 

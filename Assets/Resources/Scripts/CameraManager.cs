@@ -9,9 +9,9 @@ namespace Com.LunacyIncorporation.Kalandria
 
         #region Public Fields
 
-        [Tooltip("The distance the mouse must be from the edge of the screen to scroll")]
+        [Tooltip("The percent margin you want to make the camera scroll at an edge")]
         [SerializeField]
-        public int screenBounds;
+        public float screenBounds;
 
         [Tooltip("The speed at which the camera pans")]
         [SerializeField]
@@ -24,14 +24,21 @@ namespace Com.LunacyIncorporation.Kalandria
 
         private int screenWidth;
         private int screenHeight;
+        private float screenBoundWidth;
+        private float screenBoundHeight;
 
         #endregion
+
+
+        #region Private Methods
 
 
         void Start()    
         {
             screenWidth = Screen.width;
             screenHeight = Screen.height;
+            screenBoundWidth = screenWidth*(screenBounds / 100);
+            screenBoundHeight = screenHeight*(screenBounds / 100);
         }
 
         private void Update()
@@ -56,18 +63,22 @@ namespace Com.LunacyIncorporation.Kalandria
             {
                 return;
             }
-            // Check if the mouse is within the bounds 
-            Debug.Log("Processing the inputs");
-            Debug.Log(Input.mousePosition.x);
-            Debug.Log(screenWidth / 2 - 50);
 
-            // Mouse is near the right side
-            if (Input.mousePosition.x > screenWidth / 2 - screenBounds)
+            // Mouse is near the left side
+            if (Input.mousePosition.x < screenBoundWidth)
             {
-                Debug.Log("Mouse is near the right side of the screen");
+                Debug.Log("Mouse is near the left side of the screen");
                 gameObject.transform.position = new Vector3(panSpeed*Time.deltaTime, 0, 0);
             }
+
+            // Mouse is near the right side
+            if (Input.mousePosition.x > screenWidth - screenBoundWidth)
+            {
+                Debug.Log("Mouse is near the right side of the screen");
+            }
         }
+
+        #endregion
     }
 
 }
