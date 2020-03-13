@@ -27,6 +27,7 @@ namespace Com.LunacyIncorporation.Kalandria
         private float screenBoundWidth;
         private float screenBoundHeight;
         private GameObject cameraPanner;
+        private Vector3 direction;
 
         #endregion
 
@@ -61,26 +62,31 @@ namespace Com.LunacyIncorporation.Kalandria
                 return;
             }
 
-            // For other creatures, create their own vector so as to be able to apply percentage slows
+            // Reset the direction vector
+            direction = new Vector3(0, 0, 0);
+
             if (Input.mousePosition.x < screenBoundWidth)
             {
-                cameraPanner.transform.position += new Vector3(-panSpeed * Time.deltaTime, 0, 0);
+                direction += new Vector3(-1, 0, 0);
             }
             if (Input.mousePosition.x > screenWidth - screenBoundWidth)
             {
-                cameraPanner.transform.position += new Vector3(panSpeed * Time.deltaTime, 0, 0);
+                direction += new Vector3(1, 0, 0);
             }
             // Check the vertical margins
             if (Input.mousePosition.y > screenHeight - screenBoundHeight)
             {
                 Debug.Log("Mouse is at the top");
-                cameraPanner.transform.position += new Vector3(0, 0, panSpeed * Time.deltaTime);
+                direction += new Vector3(0, 0, 1);
             }
-            else if (Input.mousePosition.y < screenBoundHeight)
+            if (Input.mousePosition.y < screenBoundHeight)
             {
                 Debug.Log("Mouse is at the bottom");
-                cameraPanner.transform.position += new Vector3(0, 0, -panSpeed * Time.deltaTime);
+                direction += new Vector3(0, 0, -1);
             }
+
+            // Normalize the direction vector
+            cameraPanner.transform.Translate(direction * Time.deltaTime * panSpeed);
         }
 
         #endregion

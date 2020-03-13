@@ -38,7 +38,7 @@ namespace Com.LunacyIncorporation.Kalandria
 
             // #Critical
             // We flag as dont destory on load so that the instance survives level sync giving a seamless experience when levels load
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
 
         }
         #endregion
