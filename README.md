@@ -46,7 +46,7 @@ Ever card has a manacost, image, text.<br/>
 playing the card onto a lane targets that lane<br/>
 *Example card 2: Rain, costs 1 mana, Lowers soldier moral in an area. (Soldiers can rout I guess idk)*
 
-### Roadmap
+## Roadmap
 First design a simple map with one single lane, no points of holding<br/>
 The map will simply have two opposing bases.<br/>
 Second implement the warrior card, with no mana cost<br/>
