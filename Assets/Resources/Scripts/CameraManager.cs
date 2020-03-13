@@ -26,6 +26,7 @@ namespace Com.LunacyIncorporation.Kalandria
         private int screenHeight;
         private float screenBoundWidth;
         private float screenBoundHeight;
+        private GameObject cameraPanner;
 
         #endregion
 
@@ -39,16 +40,12 @@ namespace Com.LunacyIncorporation.Kalandria
             screenHeight = Screen.height;
             screenBoundWidth = screenWidth*(screenBounds / 100);
             screenBoundHeight = screenHeight*(screenBounds / 100);
+            cameraPanner = transform.root.gameObject;
         }
 
         private void Update()
         {
             ProcessInputs();
-        }
-
-        private void LateUpdate()
-        {
-            // Move the camera position the be the position of the local cameraManager
             Camera.main.transform.position = gameObject.transform.position;
         }
 
@@ -64,49 +61,25 @@ namespace Com.LunacyIncorporation.Kalandria
                 return;
             }
 
-            // Checks the horizontal margins for panning
+            // For other creatures, create their own vector so as to be able to apply percentage slows
             if (Input.mousePosition.x < screenBoundWidth)
             {
-                if (Input.mousePosition.y > screenHeight - screenBoundHeight)
-                {
-                    Debug.Log("Mouse is near the left and top");
-                }
-                else if (Input.mousePosition.y < screenBoundHeight)
-                {
-                    Debug.Log("Mouse is near the left and bottom");
-                }
-                else
-                {
-                    Debug.Log("Mouse is near the left");
-                    gameObject.transform.position = new Vector3(panSpeed * Time.deltaTime, 0, 0);
-                }
-
+                cameraPanner.transform.position += new Vector3(-panSpeed * Time.deltaTime, 0, 0);
             }
-            else if (Input.mousePosition.x > screenWidth - screenBoundWidth)
+            if (Input.mousePosition.x > screenWidth - screenBoundWidth)
             {
-                if (Input.mousePosition.y > screenHeight - screenBoundHeight)
-                {
-                    Debug.Log("Mouse is near the right and top");
-                }
-                else if (Input.mousePosition.y < screenBoundHeight)
-                {
-                    Debug.Log("Mouse is near the right and bottom");
-                }
-                else
-                {
-                    Debug.Log("Mouse is near the right");
-                    gameObject.transform.position = new Vector3(panSpeed * Time.deltaTime, 0, 0);
-                }
+                cameraPanner.transform.position += new Vector3(panSpeed * Time.deltaTime, 0, 0);
             }
-
             // Check the vertical margins
             if (Input.mousePosition.y > screenHeight - screenBoundHeight)
             {
                 Debug.Log("Mouse is at the top");
+                cameraPanner.transform.position += new Vector3(0, 0, panSpeed * Time.deltaTime);
             }
             else if (Input.mousePosition.y < screenBoundHeight)
             {
                 Debug.Log("Mouse is at the bottom");
+                cameraPanner.transform.position += new Vector3(0, 0, -panSpeed * Time.deltaTime);
             }
         }
 

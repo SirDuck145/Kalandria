@@ -106,7 +106,7 @@ namespace Com.LunacyIncorporation.Kalandria
             Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
             // #Critical: we failed to join a random room, maybe none exist or are full.
-            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers, CleanupCacheOnLeave = false });
+            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayers });
         }
 
         public override void OnJoinedRoom()
